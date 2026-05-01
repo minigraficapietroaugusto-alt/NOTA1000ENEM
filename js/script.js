@@ -256,7 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span class="year-badge">${theme.ano}</span>
                         <h3>${theme.tema}</h3>
                         <p class="model-author"><i class="fa-solid fa-tag"></i> ${theme.eixo}</p>
-                        <div class="model-snippet">${essays.length} redações/análises no banco local para este tema.</div>
+                        <div class="model-snippet">${essays.length} texto(s) completo(s) no banco local para este tema.</div>
                         <div class="mini-list">${essays.slice(0, 5).map((m, index) => `<button class="link-button" onclick="openModal(${modelosData.indexOf(m)})">Ver estratégia ${index + 1}</button>`).join('')}</div>`;
                 } else {
                     card.innerHTML = `

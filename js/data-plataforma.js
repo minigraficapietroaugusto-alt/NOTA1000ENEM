@@ -235,3 +235,51 @@ function buildAtividadesData() {
 }
 
 const atividadesData = buildAtividadesData();
+
+function buildRedacoesCompletasAutorais() {
+    const repertoriosPorEixo = [
+        {match: "Tecnologia", rep: "George Orwell, em '1984'", causa1: "a ausência de educação digital", causa2: "a atuação pouco transparente de agentes tecnológicos", agente: "Ministério da Educação", acao: "ampliar programas de letramento midiático"},
+        {match: "Saúde", rep: "a Constituição Federal de 1988", causa1: "a negligência estatal", causa2: "a permanência de preconceitos sociais", agente: "Ministério da Saúde", acao: "fortalecer campanhas preventivas e redes de acolhimento"},
+        {match: "Educação", rep: "Immanuel Kant", causa1: "a precariedade do ensino básico", causa2: "a desigualdade de acesso à informação", agente: "Ministério da Educação", acao: "financiar projetos pedagógicos permanentes"},
+        {match: "Cultura", rep: "Ailton Krenak", causa1: "o apagamento histórico", causa2: "a concentração dos meios de difusão cultural", agente: "Ministério da Cultura", acao: "fomentar projetos culturais descentralizados"},
+        {match: "Meio ambiente", rep: "o artigo 225 da Constituição Federal", causa1: "a exploração econômica predatória", causa2: "a fiscalização insuficiente", agente: "Ministério do Meio Ambiente", acao: "ampliar fiscalização e educação ambiental"},
+        {match: "Trabalho", rep: "Karl Marx", causa1: "a precarização das relações laborais", causa2: "a invisibilização social de determinados trabalhadores", agente: "Ministério do Trabalho", acao: "fortalecer a fiscalização e a proteção trabalhista"},
+        {match: "Cidadania", rep: "Gilberto Dimenstein, em 'O cidadão de papel'", causa1: "a distância entre direito formal e realidade social", causa2: "a falta de acesso a serviços públicos", agente: "Ministério dos Direitos Humanos", acao: "criar mutirões de cidadania e informação"},
+        {match: "Direitos", rep: "a Declaração Universal dos Direitos Humanos", causa1: "a naturalização da exclusão", causa2: "a omissão de instituições públicas", agente: "Ministério dos Direitos Humanos", acao: "promover campanhas educativas e proteção social"},
+        {match: "Gênero", rep: "Simone de Beauvoir", causa1: "a estrutura patriarcal", causa2: "a desvalorização do trabalho feminino", agente: "Ministério das Mulheres", acao: "implementar políticas de valorização e proteção"},
+        {match: "Infância", rep: "o Estatuto da Criança e do Adolescente", causa1: "a vulnerabilidade socioeconômica", causa2: "a fiscalização insuficiente", agente: "Ministério dos Direitos Humanos", acao: "ampliar redes de proteção infantil"},
+        {match: "Comunicação", rep: "Noam Chomsky", causa1: "a concentração informacional", causa2: "a ausência de educação crítica para a mídia", agente: "Secretaria de Comunicação Social", acao: "estimular educação midiática e transparência"},
+        {match: "Segurança", rep: "Thomas Hobbes", causa1: "a fragilidade das políticas preventivas", causa2: "a desigualdade social", agente: "Ministério da Justiça", acao: "integrar prevenção, educação e segurança comunitária"}
+    ];
+
+    function pick(theme) {
+        return repertoriosPorEixo.find(item => theme.eixo.includes(item.match)) || {
+            rep: "a Constituição Federal de 1988",
+            causa1: "a negligência estatal",
+            causa2: "a permanência de uma mentalidade excludente",
+            agente: "Governo Federal",
+            acao: "promover políticas públicas integradas"
+        };
+    }
+
+    return temasOficiaisEnemData
+        .filter(theme => !modelosData.some(model => model.ano === theme.ano))
+        .map(theme => {
+            const base = pick(theme);
+            return {
+                title: `Modelo autoral completo — ENEM ${theme.ano}`,
+                author: "Modelo autoral de treino — não é cópia de candidato real",
+                ano: theme.ano,
+                tema: theme.tema,
+                snippet: `Redação completa autoral para o tema "${theme.tema}", criada para estudo de estrutura, repertório e proposta de intervenção.`,
+                intro: `${base.rep} evidencia que problemas sociais não surgem de forma isolada, mas são construídos por práticas históricas e institucionais. Nesse sentido, o tema "${theme.tema}" revela uma dificuldade brasileira que compromete a cidadania e impede a plena garantia de direitos. Tal realidade é sustentada não apenas por ${base.causa1}, mas também por ${base.causa2}, fatores que exigem análise crítica e intervenção responsável.`,
+                d1: `Em primeiro lugar, é necessário destacar ${base.causa1} como elemento central para a manutenção do problema. Isso ocorre porque, quando o poder público não transforma direitos previstos em ações concretas, parte da população permanece sem acesso efetivo à proteção, à informação e às oportunidades necessárias para uma vida digna. Dessa forma, o tema proposto deixa de ser apenas uma questão individual e passa a expressar uma falha coletiva, já que a ausência de políticas consistentes produz desigualdades e limita o exercício da cidadania.`,
+                d2: `Além disso, ${base.causa2} aprofunda esse cenário. Sob essa perspectiva, a sociedade tende a naturalizar comportamentos excludentes, reproduzindo estigmas e dificultando a mudança de mentalidades. Consequentemente, grupos afetados pelo problema passam a ser vistos como responsáveis por sua própria condição, o que enfraquece o debate público e reduz a pressão por soluções. Assim, enquanto essa visão persistir, a problemática continuará sendo repetida em diferentes espaços sociais.`,
+                conclusao: `Portanto, é indispensável enfrentar os desafios relacionados a "${theme.tema}". Para isso, cabe ao ${base.agente}, por meio de parcerias com escolas, organizações sociais e meios de comunicação, ${base.acao}, com campanhas, oficinas e materiais acessíveis à população. Essa ação deve ocorrer de modo contínuo e com atenção aos grupos mais vulneráveis, a fim de combater ${base.causa1}, reduzir ${base.causa2} e garantir que os direitos constitucionais sejam efetivados na prática.`,
+                analise: `Modelo autoral com quatro parágrafos, repertório legitimado, tese com duas causas, conectivos entre parágrafos e proposta de intervenção com agente, ação, meio, detalhamento e finalidade. Use como referência estrutural, adaptando repertórios e argumentos com autoria própria. Fonte do tema: ${theme.fonte}.`
+            };
+        });
+}
+
+const redacoesCompletasAutoraisData = buildRedacoesCompletasAutorais();
+modelosData.push(...redacoesCompletasAutoraisData);
