@@ -1,4 +1,4 @@
-const CACHE_NAME = 'nota1000enem-v3';
+const CACHE_NAME = 'nota1000enem-v4';
 const ASSETS = [
   './',
   './index.html',
@@ -10,6 +10,7 @@ const ASSETS = [
   './js/data-repertorio.js',
   './js/data-temas.js',
   './js/data-conectivos.js',
+  './js/data-plataforma.js',
   './js/script.js'
 ];
 

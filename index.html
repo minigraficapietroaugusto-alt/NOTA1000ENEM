@@ -67,7 +67,16 @@
                     <i class="fa-solid fa-list-check"></i> Competências
                 </a>
                 <a href="#modelos" class="nav-item" data-target="modelos">
-                    <i class="fa-solid fa-medal"></i> Modelos Nota 1000
+                    <i class="fa-solid fa-medal"></i> Redações Nota 1000
+                </a>
+                <a href="#atividades" class="nav-item" data-target="atividades">
+                    <i class="fa-solid fa-circle-question"></i> Atividades ENEM
+                </a>
+                <a href="#modelos-prontos" class="nav-item" data-target="modelos-prontos">
+                    <i class="fa-solid fa-layer-group"></i> Modelos de Redação
+                </a>
+                <a href="#inteligencia" class="nav-item" data-target="inteligencia">
+                    <i class="fa-solid fa-chart-line"></i> O que mais cai
                 </a>
                 <a href="#temas" class="nav-item" data-target="temas">
                     <i class="fa-solid fa-lightbulb"></i> Temas e Ideias
@@ -149,6 +158,20 @@
                             </div>
                         </div>
                         <div class="stat-card glass-panel">
+                            <div class="stat-icon"><i class="fa-solid fa-circle-check"></i></div>
+                            <div class="stat-info">
+                                <h3>Questões Respondidas</h3>
+                                <p id="questions-counter">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card glass-panel">
+                            <div class="stat-icon"><i class="fa-solid fa-bullseye"></i></div>
+                            <div class="stat-info">
+                                <h3>Taxa de Acerto</h3>
+                                <p id="accuracy-counter">0%</p>
+                            </div>
+                        </div>
+                        <div class="stat-card glass-panel">
                             <div class="stat-icon"><i class="fa-solid fa-book-bookmark"></i></div>
                             <div class="stat-info">
                                 <h3>Anotações Salvas</h3>
@@ -161,6 +184,21 @@
                         <h3><i class="fa-solid fa-bolt"></i> Dica Rápida do Dia</h3>
                         <p id="daily-tip">Sempre estruture sua redação com 4 parágrafos: 1 de Introdução, 2 de
                             Desenvolvimento e 1 de Conclusão.</p>
+                    </div>
+
+                    <div class="dashboard-grid mt-4">
+                        <div class="glass-panel">
+                            <h3><i class="fa-solid fa-route"></i> Plano de estudo de hoje</h3>
+                            <ul class="study-plan" id="study-plan"></ul>
+                        </div>
+                        <div class="glass-panel">
+                            <h3><i class="fa-solid fa-ranking-star"></i> Progresso local</h3>
+                            <div class="progress-track">
+                                <span id="progress-label">0% do ciclo básico</span>
+                                <div class="progress-bar"><span id="progress-fill"></span></div>
+                            </div>
+                            <p class="section-desc compact">Dados salvos apenas neste navegador.</p>
+                        </div>
                     </div>
                 </section>
 
@@ -182,8 +220,77 @@
 
                 <!-- Modelos Section -->
                 <section id="modelos" class="page-section">
+                    <div class="section-toolbar glass-panel">
+                        <div>
+                            <h2>Redações Nota 1000</h2>
+                            <p>Textos do banco local, análises e histórico oficial de temas. Textos completos só entram quando houver fonte pública permitida ou material já autorizado.</p>
+                        </div>
+                        <div class="filter-row">
+                            <select id="essay-year-filter" aria-label="Filtrar por ano"></select>
+                            <input type="search" id="essay-search" placeholder="Buscar tema, repertório ou eixo...">
+                        </div>
+                    </div>
                     <div class="models-grid" id="models-container">
                         <!-- Content loaded via JS -->
+                    </div>
+                </section>
+
+                <!-- Atividades Section -->
+                <section id="atividades" class="page-section">
+                    <div class="section-toolbar glass-panel">
+                        <div>
+                            <h2>Atividades ENEM</h2>
+                            <p>Banco original com questões de redação, pontuação, conectivos, argumentação e competências. A base é gerada para ultrapassar 1000 itens e crescer sem pesar o site.</p>
+                        </div>
+                        <div class="filter-row">
+                            <select id="activity-topic-filter" aria-label="Filtrar por assunto"></select>
+                            <select id="activity-level-filter" aria-label="Filtrar por nível"></select>
+                        </div>
+                    </div>
+                    <div class="activity-stats-grid">
+                        <div class="stat-card glass-panel"><div class="stat-icon"><i class="fa-solid fa-database"></i></div><div class="stat-info"><h3>Banco de questões</h3><p id="question-bank-size">0</p></div></div>
+                        <div class="stat-card glass-panel"><div class="stat-icon"><i class="fa-solid fa-check"></i></div><div class="stat-info"><h3>Acertos</h3><p id="activity-correct">0</p></div></div>
+                        <div class="stat-card glass-panel"><div class="stat-icon"><i class="fa-solid fa-xmark"></i></div><div class="stat-info"><h3>Erros</h3><p id="activity-wrong">0</p></div></div>
+                    </div>
+                    <div id="activity-card" class="activity-card glass-panel"></div>
+                </section>
+
+                <aside class="ad-slot middle-ad" data-ad-slot>
+                    <span>Publicidade</span>
+                    <strong>Parceiros de estudo ENEM</strong>
+                    <small>Banner entre seções para o plano gratuito</small>
+                </aside>
+
+                <!-- Modelos Prontos Section -->
+                <section id="modelos-prontos" class="page-section">
+                    <div class="section-toolbar glass-panel">
+                        <div>
+                            <h2>Modelos de Redação</h2>
+                            <p>Estruturas prontas para estudar técnica, adaptar com autoria e evitar plágio.</p>
+                        </div>
+                        <div class="filter-row">
+                            <select id="ready-model-axis-filter" aria-label="Filtrar por eixo"></select>
+                        </div>
+                    </div>
+                    <div class="template-grid" id="ready-models-container"></div>
+                </section>
+
+                <!-- Inteligência Section -->
+                <section id="inteligencia" class="page-section">
+                    <div class="section-toolbar glass-panel">
+                        <div>
+                            <h2>O que mais cai no ENEM</h2>
+                            <p>Leitura histórica dos temas oficiais, padrões recorrentes e hipóteses de treino. Não são previsões oficiais.</p>
+                        </div>
+                    </div>
+                    <div class="intelligence-grid" id="intelligence-container"></div>
+                    <div class="glass-panel mt-4">
+                        <h3>Temas oficiais da redação</h3>
+                        <div class="timeline-list" id="official-themes-container"></div>
+                    </div>
+                    <div class="glass-panel mt-4">
+                        <h3>Referências usadas</h3>
+                        <ul class="source-list" id="sources-container"></ul>
                     </div>
                 </section>
 
@@ -348,6 +455,7 @@
     <script src="js/data-repertorio.js"></script>
     <script src="js/data-temas.js"></script>
     <script src="js/data-conectivos.js"></script>
+    <script src="js/data-plataforma.js"></script>
     <script src="js/script.js"></script>
 </body>
 

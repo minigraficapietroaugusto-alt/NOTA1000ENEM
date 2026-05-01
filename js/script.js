@@ -103,7 +103,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const pageTitles = {
         dashboard: 'Dashboard',
         competencias: 'Competências',
-        modelos: 'Modelos Nota 1000',
+        modelos: 'Redações Nota 1000',
+        atividades: 'Atividades ENEM',
+        'modelos-prontos': 'Modelos de Redação',
+        inteligencia: 'O que mais cai',
         temas: 'Temas e Ideias',
         repertorio: 'Repertório',
         dicionario: 'Dicionário Avançado',
@@ -220,22 +223,62 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     renderComp(1);
 
-    // ===== 4. MODELOS NOTA 1000 =====
+    // ===== 4. REDAÇÕES NOTA 1000 =====
     const modelsContainer = document.getElementById('models-container');
+    const essayYearFilter = document.getElementById('essay-year-filter');
+    const essaySearch = document.getElementById('essay-search');
     const modalOverlay = document.getElementById('essay-modal');
     const modalBody = document.getElementById('modal-body');
     const closeModal = document.querySelector('.close-modal');
 
-    modelosData.forEach((m, i) => {
-        const div = document.createElement('div');
-        div.className = 'model-card glass-panel';
-        div.innerHTML = `
-            <h3>${m.title}</h3>
-            <p class="model-author"><i class="fa-solid fa-user-pen"></i> ${m.author} — ${m.ano}</p>
-            <div class="model-snippet">"${m.snippet}"</div>
-            <button class="btn-primary w-100" onclick="openModal(${i})">Ler Redação Completa</button>`;
-        modelsContainer.appendChild(div);
-    });
+    const officialYears = [...new Set(temasOficiaisEnemData.map(t => t.ano))].sort((a, b) => b - a);
+    essayYearFilter.innerHTML = '<option value="all">Todos os anos</option>' + officialYears.map(y => `<option value="${y}">${y}</option>`).join('');
+
+    function getEssaysForTheme(theme) {
+        return modelosData.filter(m => m.ano === theme.ano || m.tema === theme.tema);
+    }
+
+    function renderEssayArchive() {
+        const selectedYear = essayYearFilter.value;
+        const term = essaySearch.value.trim().toLowerCase();
+        modelsContainer.innerHTML = '';
+
+        temasOficiaisEnemData
+            .filter(theme => selectedYear === 'all' || String(theme.ano) === selectedYear)
+            .filter(theme => [theme.tema, theme.eixo, theme.fonte].join(' ').toLowerCase().includes(term))
+            .forEach(theme => {
+                const essays = getEssaysForTheme(theme);
+                const card = document.createElement('div');
+                card.className = 'model-card glass-panel essay-archive-card';
+
+                if(essays.length) {
+                    card.innerHTML = `
+                        <span class="year-badge">${theme.ano}</span>
+                        <h3>${theme.tema}</h3>
+                        <p class="model-author"><i class="fa-solid fa-tag"></i> ${theme.eixo}</p>
+                        <div class="model-snippet">${essays.length} redações/análises no banco local para este tema.</div>
+                        <div class="mini-list">${essays.slice(0, 5).map((m, index) => `<button class="link-button" onclick="openModal(${modelosData.indexOf(m)})">Ver estratégia ${index + 1}</button>`).join('')}</div>`;
+                } else {
+                    card.innerHTML = `
+                        <span class="year-badge">${theme.ano}</span>
+                        <h3>${theme.tema}</h3>
+                        <p class="model-author"><i class="fa-solid fa-tag"></i> ${theme.eixo}</p>
+                        <div class="model-snippet">Tema oficial registrado. Ainda sem texto completo autorizado no banco local.</div>
+                        <ul class="analysis-tags">
+                            <li>Treine tese com 2 causas.</li>
+                            <li>Use repertório pertinente ao eixo.</li>
+                            <li>Finalize com intervenção C5 completa.</li>
+                        </ul>
+                        <p class="source-note">Fonte: ${theme.fonte}</p>`;
+                }
+
+                modelsContainer.appendChild(card);
+            });
+
+        if(!modelsContainer.innerHTML) {
+            modelsContainer.innerHTML = '<p class="section-desc">Nenhum resultado encontrado.</p>';
+        }
+    }
 
     window.openModal = (i) => {
         const m = modelosData[i];
@@ -243,18 +286,164 @@ document.addEventListener('DOMContentLoaded', () => {
             <h2 style="color:var(--accent-primary);margin-bottom:8px;">${m.title}</h2>
             <p style="color:var(--text-secondary);margin-bottom:20px;">${m.author} — Tema: ${m.tema}</p>
             <div style="line-height:1.8;">
-                <h3 style="color:var(--success);margin:16px 0 8px;">📌 Introdução</h3><p>${m.intro}</p>
-                <h3 style="color:var(--warning);margin:16px 0 8px;">📌 Desenvolvimento 1</h3><p>${m.d1}</p>
-                <h3 style="color:var(--warning);margin:16px 0 8px;">📌 Desenvolvimento 2</h3><p>${m.d2}</p>
-                <h3 style="color:var(--accent-primary);margin:16px 0 8px;">📌 Conclusão (Intervenção)</h3><p>${m.conclusao}</p>
+                <h3 style="color:var(--success);margin:16px 0 8px;">Introdução</h3><p>${m.intro}</p>
+                <h3 style="color:var(--warning);margin:16px 0 8px;">Desenvolvimento 1</h3><p>${m.d1}</p>
+                <h3 style="color:var(--warning);margin:16px 0 8px;">Desenvolvimento 2</h3><p>${m.d2}</p>
+                <h3 style="color:var(--accent-primary);margin:16px 0 8px;">Conclusão (Intervenção)</h3><p>${m.conclusao}</p>
                 <hr style="margin:20px 0;border:none;border-top:1px solid var(--border-color);">
-                <h3 style="color:var(--success);margin:16px 0 8px;">🔍 Análise Estrutural</h3><p>${m.analise}</p>
+                <h3 style="color:var(--success);margin:16px 0 8px;">Ver estratégia da redação</h3>
+                <p>${m.analise}</p>
+                <div class="strategy-grid">
+                    <span>Repertório produtivo</span>
+                    <span>Projeto de texto claro</span>
+                    <span>Conectivos funcionais</span>
+                    <span>Intervenção detalhada</span>
+                </div>
             </div>`;
         modalOverlay.classList.add('active');
     };
 
     closeModal.addEventListener('click', () => modalOverlay.classList.remove('active'));
     modalOverlay.addEventListener('click', (e) => { if(e.target === modalOverlay) modalOverlay.classList.remove('active'); });
+    essayYearFilter.addEventListener('change', renderEssayArchive);
+    essaySearch.addEventListener('input', renderEssayArchive);
+    renderEssayArchive();
+
+    // ===== 4B. ATIVIDADES ENEM =====
+    const activityTopicFilter = document.getElementById('activity-topic-filter');
+    const activityLevelFilter = document.getElementById('activity-level-filter');
+    const activityCard = document.getElementById('activity-card');
+    const questionBankSize = document.getElementById('question-bank-size');
+    const activityCorrect = document.getElementById('activity-correct');
+    const activityWrong = document.getElementById('activity-wrong');
+    let currentQuestionIndex = 0;
+    let filteredQuestions = atividadesData;
+
+    activityTopicFilter.innerHTML = '<option value="all">Todos os assuntos</option>' + activityTopics.map(t => `<option value="${t.id}">${t.label}</option>`).join('');
+    activityLevelFilter.innerHTML = '<option value="all">Todos os níveis</option>' + activityLevels.map(l => `<option value="${l}">${l}</option>`).join('');
+    questionBankSize.innerText = atividadesData.length;
+
+    function getActivityStats() {
+        return JSON.parse(localStorage.getItem('enem_activity_stats') || '{"correct":0,"wrong":0,"answered":0}');
+    }
+
+    function saveActivityStats(stats) {
+        localStorage.setItem('enem_activity_stats', JSON.stringify(stats));
+        updateDashboardStats();
+    }
+
+    function renderActivityStats() {
+        const stats = getActivityStats();
+        activityCorrect.innerText = stats.correct;
+        activityWrong.innerText = stats.wrong;
+    }
+
+    function filterQuestions() {
+        filteredQuestions = atividadesData.filter(q => {
+            const topicMatch = activityTopicFilter.value === 'all' || q.topic === activityTopicFilter.value;
+            const levelMatch = activityLevelFilter.value === 'all' || q.level === activityLevelFilter.value;
+            return topicMatch && levelMatch;
+        });
+        currentQuestionIndex = 0;
+        renderQuestion();
+    }
+
+    function renderQuestion() {
+        const q = filteredQuestions[currentQuestionIndex % filteredQuestions.length];
+        if(!q) {
+            activityCard.innerHTML = '<p class="section-desc">Nenhuma questão encontrada para este filtro.</p>';
+            return;
+        }
+
+        activityCard.innerHTML = `
+            <div class="question-meta">
+                <span>${q.topicLabel}</span>
+                <span>${q.level}</span>
+                <span>${q.competence}</span>
+                <span>${currentQuestionIndex + 1} / ${filteredQuestions.length}</span>
+            </div>
+            <h3>${q.stem}</h3>
+            <div class="question-options">
+                ${q.options.map((option, index) => `<button class="option-button" data-option="${index}"><strong>${String.fromCharCode(65 + index)}</strong>${option}</button>`).join('')}
+            </div>
+            <div id="question-feedback" class="question-feedback hidden"></div>
+            <button id="next-question" class="btn-primary mt-4" type="button">Próxima questão</button>`;
+
+        activityCard.querySelectorAll('.option-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const selected = Number(button.dataset.option);
+                const isCorrect = selected === q.answer;
+                const feedback = document.getElementById('question-feedback');
+                const stats = getActivityStats();
+                stats.answered += 1;
+                if(isCorrect) stats.correct += 1;
+                else stats.wrong += 1;
+                saveActivityStats(stats);
+                renderActivityStats();
+
+                activityCard.querySelectorAll('.option-button').forEach(btn => {
+                    btn.disabled = true;
+                    const optionIndex = Number(btn.dataset.option);
+                    btn.classList.toggle('correct', optionIndex === q.answer);
+                    btn.classList.toggle('wrong', optionIndex === selected && !isCorrect);
+                });
+
+                feedback.className = `question-feedback ${isCorrect ? 'good' : 'bad'}`;
+                feedback.innerHTML = `<strong>${isCorrect ? 'Acertou!' : 'Quase.'}</strong> ${q.explanation}`;
+            });
+        });
+
+        document.getElementById('next-question').addEventListener('click', () => {
+            currentQuestionIndex += 1;
+            renderQuestion();
+        });
+    }
+
+    activityTopicFilter.addEventListener('change', filterQuestions);
+    activityLevelFilter.addEventListener('change', filterQuestions);
+    renderActivityStats();
+    renderQuestion();
+
+    // ===== 4C. MODELOS PRONTOS E INTELIGÊNCIA =====
+    const readyModelAxisFilter = document.getElementById('ready-model-axis-filter');
+    const readyModelsContainer = document.getElementById('ready-models-container');
+    const intelligenceContainer = document.getElementById('intelligence-container');
+    const officialThemesContainer = document.getElementById('official-themes-container');
+    const sourcesContainer = document.getElementById('sources-container');
+
+    readyModelAxisFilter.innerHTML = '<option value="all">Todos os eixos</option>' + modelosProntosData.map(m => `<option value="${m.eixo}">${m.eixo}</option>`).join('');
+
+    function renderReadyModels() {
+        readyModelsContainer.innerHTML = modelosProntosData
+            .filter(m => readyModelAxisFilter.value === 'all' || m.eixo === readyModelAxisFilter.value)
+            .map(m => `
+                <article class="template-card glass-panel">
+                    <span class="year-badge">${m.eixo}</span>
+                    <h3>Estrutura adaptável</h3>
+                    <h4>Introdução</h4><p>${m.introducao}</p>
+                    <h4>Desenvolvimento</h4><p>${m.desenvolvimento}</p>
+                    <h4>Conclusão</h4><p>${m.conclusao}</p>
+                </article>`).join('');
+    }
+
+    readyModelAxisFilter.addEventListener('change', renderReadyModels);
+    renderReadyModels();
+
+    intelligenceContainer.innerHTML = inteligenciaEnemData.map(item => `
+        <article class="intel-card glass-panel">
+            <span>${item.indicador}</span>
+            <h3>${item.titulo}</h3>
+            <p>${item.detalhe}</p>
+        </article>`).join('');
+
+    officialThemesContainer.innerHTML = temasOficiaisEnemData.map(theme => `
+        <div class="timeline-item">
+            <strong>${theme.ano}</strong>
+            <div><h4>${theme.tema}</h4><p>${theme.eixo} · Fonte: ${theme.fonte}</p></div>
+        </div>`).join('');
+
+    sourcesContainer.innerHTML = fontesConfiaveisData.map(source => `
+        <li><a href="${source.url}" target="_blank" rel="noopener">${source.nome}</a><span>${source.uso}</span></li>`).join('');
 
     // ===== 5. TEMAS =====
     const themesContainer = document.getElementById('themes-container');
@@ -401,6 +590,13 @@ document.addEventListener('DOMContentLoaded', () => {
         else if(c5Found.length < 4) { scores.c5 -= 40; critiques.push({t:'warn',m:'Intervenção parcial. Lembre dos 5 elementos: Agente+Ação+Meio+Finalidade+Detalhamento.'});}
         else critiques.push({t:'good',m:'Elementos de intervenção detectados na C5!'});
 
+        const suggestions = [];
+        if(paragraphs !== 4) suggestions.push('Ajuste para 4 parágrafos: introdução, dois desenvolvimentos e conclusão.');
+        if(words < 350) suggestions.push('Aprofunde causas, consequências e exemplos para se aproximar de 350 a 450 palavras.');
+        if(repCount < 2) suggestions.push('Inclua repertórios legitimados e explique a relação deles com o argumento.');
+        if(conFound.length < 5) suggestions.push('Varie conectivos entre e dentro dos parágrafos para fortalecer a C4.');
+        if(c5Found.length < 4) suggestions.push('Na conclusão, explicite agente, ação, meio, detalhamento e finalidade.');
+
         const total = scores.c1 + scores.c2 + scores.c3 + scores.c4 + scores.c5;
         const color = total >= 900 ? 'var(--success)' : total >= 700 ? 'var(--warning)' : 'var(--danger)';
 
@@ -417,11 +613,18 @@ document.addEventListener('DOMContentLoaded', () => {
             <ul class="critique-list">
                 ${critiques.map(c => `<li class="${c.t}"><i class="fa-solid fa-${c.t==='good'?'check':c.t==='warn'?'triangle-exclamation':'xmark'}"></i> ${c.m}</li>`).join('')}
             </ul>
-            <p style="margin-top:20px;font-size:.85rem;color:var(--text-secondary);">*Análise automatizada baseada em palavras-chave. A avaliação real foca na coerência argumentativa.</p>`;
+            <div class="analysis-summary">
+                <h4>Diagnóstico rápido</h4>
+                <p><strong>${words}</strong> palavras · <strong>${paragraphs}</strong> parágrafos · <strong>${conFound.length}</strong> conectivos detectados · <strong>${repCount}</strong> marcadores de repertório.</p>
+                <h4>Sugestões de melhoria</h4>
+                <ul>${(suggestions.length ? suggestions : ['Texto bem encaminhado. Revise pontuação fina, autoria e conexão entre repertório e tese.']).map(s => `<li>${s}</li>`).join('')}</ul>
+            </div>
+            <p style="margin-top:20px;font-size:.85rem;color:var(--text-secondary);">*Correção simulada por critérios e palavras-chave. Não substitui avaliação humana nem a correção oficial do Inep.</p>`;
 
         let c = parseInt(localStorage.getItem('essays_count') || '0') + 1;
         localStorage.setItem('essays_count', c);
         essaysCounter.innerText = c;
+        updateDashboardStats();
     });
 
     // ===== 11. ANOTAÇÕES =====
@@ -455,12 +658,59 @@ document.addEventListener('DOMContentLoaded', () => {
         else { notes.unshift(note); currentNoteIndex = 0; }
         localStorage.setItem('enem_notes', JSON.stringify(notes));
         renderNotes();
+        updateDashboardStats();
         btnSaveNote.innerHTML = '<i class="fa-solid fa-check"></i> Salvo!';
         setTimeout(() => { btnSaveNote.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Salvar'; }, 2000);
     });
 
+    // ===== 12. DASHBOARD =====
+    const questionsCounter = document.getElementById('questions-counter');
+    const accuracyCounter = document.getElementById('accuracy-counter');
+    const streakCounter = document.getElementById('streak-counter');
+    const studyPlan = document.getElementById('study-plan');
+    const progressLabel = document.getElementById('progress-label');
+    const progressFill = document.getElementById('progress-fill');
+
+    function updateStudyStreak() {
+        const today = new Date().toLocaleDateString('pt-BR');
+        const streakData = JSON.parse(localStorage.getItem('enem_streak') || '{"last":"","count":0}');
+        if(streakData.last !== today) {
+            streakData.count = Math.max(1, Number(streakData.count || 0) + 1);
+            streakData.last = today;
+            localStorage.setItem('enem_streak', JSON.stringify(streakData));
+        }
+        streakCounter.innerText = streakData.count || 1;
+    }
+
+    function updateDashboardStats() {
+        const stats = getActivityStats();
+        const essays = parseInt(localStorage.getItem('essays_count') || '0');
+        const notesCount = JSON.parse(localStorage.getItem('enem_notes') || '[]').length;
+        const answered = stats.answered || 0;
+        const accuracy = answered ? Math.round((stats.correct / answered) * 100) : 0;
+        const progress = Math.min(100, Math.round(((essays * 8) + (answered * 0.8) + (notesCount * 3)) / 2));
+
+        essaysCounter.innerText = essays;
+        notesCounter.innerText = notesCount;
+        questionsCounter.innerText = answered;
+        accuracyCounter.innerText = `${accuracy}%`;
+        progressLabel.innerText = `${progress}% do ciclo básico`;
+        progressFill.style.width = `${progress}%`;
+    }
+
+    function renderStudyPlan() {
+        studyPlan.innerHTML = [
+            'Responder 10 questões de atividades ENEM.',
+            'Ler uma estratégia de redação nota 1000.',
+            'Escrever uma introdução para um tema oficial antigo.',
+            'Salvar uma anotação com repertório novo.'
+        ].map(item => `<li>${item}</li>`).join('');
+    }
+
     // Init
-    essaysCounter.innerText = localStorage.getItem('essays_count') || '0';
+    updateStudyStreak();
+    updateDashboardStats();
+    renderStudyPlan();
     renderNotes();
 
     if('serviceWorker' in navigator) {
