@@ -65,16 +65,16 @@ body {
 .w-100 { width: 100%; }
 .hidden { display: none !important; }
 
-body.access-locked {
+body.auth-locked {
     min-height: 100vh;
     overflow: hidden;
 }
 
-body.access-locked .app-container {
+body.auth-locked .app-container {
     display: none;
 }
 
-.paywall-screen {
+.auth-screen {
     min-height: 100vh;
     display: grid;
     place-items: center;
@@ -84,16 +84,16 @@ body.access-locked .app-container {
         linear-gradient(135deg, var(--bg-main), #151822);
 }
 
-.paywall-screen.hidden {
+.auth-screen.hidden {
     display: none;
 }
 
-.paywall-card {
+.auth-card {
     width: min(100%, 520px);
     padding: 32px;
 }
 
-.paywall-brand {
+.auth-brand {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -103,11 +103,11 @@ body.access-locked .app-container {
     margin-bottom: 24px;
 }
 
-.paywall-brand b {
+.auth-brand b {
     font-weight: 800;
 }
 
-.paywall-eyebrow {
+.auth-eyebrow {
     color: var(--success);
     font-size: 0.82rem;
     font-weight: 700;
@@ -115,37 +115,18 @@ body.access-locked .app-container {
     text-transform: uppercase;
 }
 
-.paywall-card h1 {
+.auth-card h1 {
     font-family: var(--font-heading);
     font-size: clamp(2rem, 7vw, 3rem);
     line-height: 1.05;
     margin-bottom: 16px;
 }
 
-.paywall-copy,
+.auth-copy,
+.auth-help,
 .access-help {
     color: var(--text-secondary);
     line-height: 1.6;
-}
-
-.paywall-price {
-    display: flex;
-    align-items: flex-start;
-    gap: 6px;
-    margin: 24px 0;
-    color: var(--text-primary);
-}
-
-.paywall-price span {
-    margin-top: 10px;
-    color: var(--text-secondary);
-    font-weight: 700;
-}
-
-.paywall-price strong {
-    font-family: var(--font-heading);
-    font-size: 3.8rem;
-    line-height: 0.9;
 }
 
 .paywall-pix {
@@ -154,6 +135,7 @@ body.access-locked .app-container {
     text-decoration: none;
 }
 
+.auth-form,
 .access-form {
     display: flex;
     flex-direction: column;
@@ -162,17 +144,20 @@ body.access-locked .app-container {
     border-top: 1px solid var(--border-color);
 }
 
+.auth-form label,
 .access-form label {
     color: var(--text-primary);
     font-weight: 700;
 }
 
+.auth-form input,
 .access-input-group {
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 10px;
 }
 
+.auth-form input,
 .access-input-group input {
     min-width: 0;
     padding: 12px 14px;
@@ -184,6 +169,17 @@ body.access-locked .app-container {
     text-transform: uppercase;
 }
 
+.auth-form input {
+    display: block;
+    width: 100%;
+    text-transform: none;
+}
+
+.auth-form button {
+    margin-top: 8px;
+}
+
+.auth-form input:focus,
 .access-input-group input:focus {
     border-color: var(--accent-primary);
     outline: none;
@@ -193,6 +189,45 @@ body.access-locked .app-container {
     min-height: 1.25rem;
     color: var(--danger);
     font-weight: 700;
+}
+
+.ad-slot {
+    display: grid;
+    place-items: center;
+    gap: 4px;
+    min-height: 96px;
+    margin-bottom: 24px;
+    padding: 18px;
+    border: 1px dashed rgba(99, 102, 241, 0.55);
+    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(16, 185, 129, 0.08));
+    color: var(--text-primary);
+    text-align: center;
+}
+
+.bottom-ad {
+    margin-top: 24px;
+    margin-bottom: 0;
+}
+
+.ad-slot span {
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.ad-slot strong {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+}
+
+.ad-slot small {
+    color: var(--text-secondary);
+}
+
+body.ads-removed .ad-slot {
+    display: none;
 }
 
 /* Buttons */
@@ -407,6 +442,23 @@ button {
     align-items: center;
     gap: 12px;
     font-weight: 500;
+}
+
+.header-action {
+    width: 38px;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: var(--bg-panel);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.header-action:hover {
+    color: var(--accent-primary);
+    background: var(--accent-light);
 }
 
 .avatar {
@@ -633,6 +685,31 @@ button {
 }
 
 .close-modal:hover { color: var(--danger); }
+
+.close-ads-modal {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+}
+
+.close-ads-modal:hover {
+    color: var(--danger);
+}
+
+.ads-modal-content h2 {
+    color: var(--accent-primary);
+    font-family: var(--font-heading);
+    margin-bottom: 12px;
+}
+
+.ads-modal-content > p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
 
 /* Temas */
 .search-bar {
@@ -1010,22 +1087,18 @@ button {
         overflow: hidden;
     }
 
-    .paywall-screen {
+    .auth-screen {
         align-items: start;
         padding: 16px;
     }
 
-    .paywall-card {
+    .auth-card {
         padding: 22px 16px;
         margin-top: 12px;
     }
 
-    .paywall-brand {
+    .auth-brand {
         margin-bottom: 18px;
-    }
-
-    .paywall-price strong {
-        font-size: 3.1rem;
     }
 
     .access-input-group {

@@ -1,32 +1,94 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const ACCESS_STORAGE_KEY = 'nota1000_access_unlocked';
-    const ACCESS_CODE = 'NOTA1000-10';
-    const paywallScreen = document.getElementById('paywall-screen');
-    const accessForm = document.getElementById('access-form');
-    const accessCodeInput = document.getElementById('access-code');
-    const accessError = document.getElementById('access-error');
+    const USER_STORAGE_KEY = 'nota1000_student_profile';
+    const ADS_REMOVED_STORAGE_KEY = 'nota1000_ads_removed';
+    const REMOVE_ADS_CODE = 'NOTA1000-10';
+    const authScreen = document.getElementById('auth-screen');
+    const authForm = document.getElementById('auth-form');
+    const studentNameInput = document.getElementById('student-name');
+    const studentEmailInput = document.getElementById('student-email');
+    const studentDisplayName = document.getElementById('student-display-name');
+    const btnLogout = document.getElementById('btn-logout');
+    const btnRemoveAds = document.getElementById('btn-remove-ads');
+    const adsModal = document.getElementById('ads-modal');
+    const closeAdsModal = document.querySelector('.close-ads-modal');
+    const removeAdsForm = document.getElementById('remove-ads-form');
+    const removeAdsCodeInput = document.getElementById('remove-ads-code');
+    const removeAdsError = document.getElementById('remove-ads-error');
 
-    function unlockAccess() {
-        localStorage.setItem(ACCESS_STORAGE_KEY, 'true');
-        document.body.classList.remove('access-locked');
-        paywallScreen.classList.add('hidden');
+    function getStudentProfile() {
+        try {
+            return JSON.parse(localStorage.getItem(USER_STORAGE_KEY));
+        } catch {
+            return null;
+        }
     }
 
-    if(localStorage.getItem(ACCESS_STORAGE_KEY) === 'true') {
-        unlockAccess();
+    function enterApp(profile) {
+        studentDisplayName.innerText = profile?.name || 'Estudante';
+        document.body.classList.remove('auth-locked');
+        authScreen.classList.add('hidden');
     }
 
-    accessForm.addEventListener('submit', (event) => {
+    function applyAdsState() {
+        const adsRemoved = localStorage.getItem(ADS_REMOVED_STORAGE_KEY) === 'true';
+        document.body.classList.toggle('ads-removed', adsRemoved);
+        document.body.classList.toggle('ads-enabled', !adsRemoved);
+        btnRemoveAds.innerHTML = adsRemoved
+            ? '<i class="fa-solid fa-circle-check"></i>'
+            : '<i class="fa-solid fa-rectangle-ad"></i>';
+        btnRemoveAds.title = adsRemoved ? 'Anúncios removidos' : 'Remover anúncios';
+    }
+
+    const savedProfile = getStudentProfile();
+    if(savedProfile?.name && savedProfile?.email) {
+        enterApp(savedProfile);
+    }
+    applyAdsState();
+
+    authForm.addEventListener('submit', (event) => {
         event.preventDefault();
-        const typedCode = accessCodeInput.value.trim().toUpperCase();
+        const profile = {
+            name: studentNameInput.value.trim(),
+            email: studentEmailInput.value.trim().toLowerCase(),
+            createdAt: new Date().toISOString()
+        };
 
-        if(typedCode === ACCESS_CODE) {
-            unlockAccess();
+        if(!profile.name || !profile.email) return;
+
+        localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(profile));
+        enterApp(profile);
+    });
+
+    btnLogout.addEventListener('click', () => {
+        localStorage.removeItem(USER_STORAGE_KEY);
+        document.body.classList.add('auth-locked');
+        authScreen.classList.remove('hidden');
+        studentNameInput.focus();
+    });
+
+    btnRemoveAds.addEventListener('click', () => {
+        adsModal.classList.add('active');
+    });
+
+    closeAdsModal.addEventListener('click', () => adsModal.classList.remove('active'));
+    adsModal.addEventListener('click', (event) => {
+        if(event.target === adsModal) adsModal.classList.remove('active');
+    });
+
+    removeAdsForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const typedCode = removeAdsCodeInput.value.trim().toUpperCase();
+
+        if(typedCode === REMOVE_ADS_CODE) {
+            localStorage.setItem(ADS_REMOVED_STORAGE_KEY, 'true');
+            removeAdsError.innerText = '';
+            adsModal.classList.remove('active');
+            applyAdsState();
             return;
         }
 
-        accessError.innerText = 'Código inválido. Confira o código recebido após o pagamento.';
-        accessCodeInput.focus();
+        removeAdsError.innerText = 'Código inválido. Confira o código recebido após o pagamento.';
+        removeAdsCodeInput.focus();
     });
 
     // ===== 1. NAVEGAÇÃO E TEMA =====

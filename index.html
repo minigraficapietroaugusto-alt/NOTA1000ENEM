@@ -19,40 +19,31 @@
         rel="stylesheet">
 </head>
 
-<body class="dark-mode access-locked">
-    <section class="paywall-screen" id="paywall-screen" aria-labelledby="paywall-title">
-        <div class="paywall-card glass-panel">
-            <div class="paywall-brand">
+<body class="dark-mode auth-locked ads-enabled">
+    <section class="auth-screen" id="auth-screen" aria-labelledby="auth-title">
+        <div class="auth-card glass-panel">
+            <div class="auth-brand">
                 <i class="fa-solid fa-pen-nib"></i>
                 <span>Nota<b>1000</b></span>
             </div>
-            <p class="paywall-eyebrow">Acesso completo</p>
-            <h1 id="paywall-title">Estude redação ENEM pelo celular</h1>
-            <p class="paywall-copy">
-                Plataforma com repertórios, temas, modelos nota 1000, gerador de estrutura,
-                correção simulada e anotações. Acesso liberado após pagamento único.
+            <p class="auth-eyebrow">Cadastro gratuito</p>
+            <h1 id="auth-title">Entre para estudar redação ENEM pelo celular</h1>
+            <p class="auth-copy">
+                O acesso é grátis com anúncios. Quem quiser estudar sem anúncios pode remover por R$ 10,00 via Pix.
             </p>
 
-            <div class="paywall-price">
-                <span>R$</span>
-                <strong>10,00</strong>
-            </div>
+            <form class="auth-form" id="auth-form">
+                <label for="student-name">Nome</label>
+                <input type="text" id="student-name" autocomplete="name" placeholder="Seu nome" required>
 
-            <a class="btn-primary paywall-pix" id="pix-payment-link"
-                href="https://nubank.com.br/cobrar/1jns7v/69f43144-dc10-48b0-bf74-6b20b9cb7ca6"
-                target="_blank" rel="noopener">
-                <i class="fa-brands fa-pix"></i>
-                Pagar com Pix
-            </a>
+                <label for="student-email">E-mail</label>
+                <input type="email" id="student-email" autocomplete="email" placeholder="seuemail@exemplo.com" required>
 
-            <form class="access-form" id="access-form">
-                <label for="access-code">Código de liberação</label>
-                <div class="access-input-group">
-                    <input type="text" id="access-code" autocomplete="one-time-code" placeholder="Digite o código">
-                    <button class="btn-success" type="submit">Liberar</button>
-                </div>
-                <p class="access-help">Após pagar, use o código enviado pelo vendedor para liberar este aparelho.</p>
-                <p class="access-error" id="access-error" role="alert" aria-live="polite"></p>
+                <button class="btn-primary" type="submit">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    Entrar no app
+                </button>
+                <p class="auth-help">Seu cadastro fica salvo apenas neste navegador.</p>
             </form>
         </div>
     </section>
@@ -117,11 +108,23 @@
                 </div>
                 <div class="user-profile">
                     <div class="avatar"><i class="fa-solid fa-user-graduate"></i></div>
-                    <span>Estudante</span>
+                    <span id="student-display-name">Estudante</span>
+                    <button id="btn-remove-ads" class="header-action" type="button" title="Remover anúncios">
+                        <i class="fa-solid fa-rectangle-ad"></i>
+                    </button>
+                    <button id="btn-logout" class="header-action" type="button" title="Sair">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    </button>
                 </div>
             </header>
 
             <div class="content-area">
+                <aside class="ad-slot top-ad" data-ad-slot>
+                    <span>Publicidade</span>
+                    <strong>Anuncie aqui</strong>
+                    <small>Plano gratuito com anúncios</small>
+                </aside>
+
                 <!-- Dashboard Section -->
                 <section id="dashboard" class="page-section active">
                     <div class="welcome-card glass-panel">
@@ -300,6 +303,11 @@
                     </div>
                 </section>
 
+                <aside class="ad-slot bottom-ad" data-ad-slot>
+                    <span>Publicidade</span>
+                    <strong>Espaço para anúncio</strong>
+                    <small>Remova os anúncios por R$ 10,00</small>
+                </aside>
             </div>
         </main>
     </div>
@@ -309,6 +317,29 @@
         <div class="modal-content glass-panel">
             <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
             <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="ads-modal">
+        <div class="modal-content glass-panel ads-modal-content">
+            <button class="close-ads-modal"><i class="fa-solid fa-xmark"></i></button>
+            <h2>Remover anúncios</h2>
+            <p>O app é grátis com anúncios. Para estudar sem anúncios neste aparelho, pague R$ 10,00 no Pix e digite o código de liberação.</p>
+            <a class="btn-primary paywall-pix" id="pix-payment-link"
+                href="https://nubank.com.br/cobrar/1jns7v/69f43144-dc10-48b0-bf74-6b20b9cb7ca6"
+                target="_blank" rel="noopener">
+                <i class="fa-brands fa-pix"></i>
+                Pagar R$ 10,00 com Pix
+            </a>
+            <form class="access-form" id="remove-ads-form">
+                <label for="remove-ads-code">Código de liberação</label>
+                <div class="access-input-group">
+                    <input type="text" id="remove-ads-code" autocomplete="one-time-code" placeholder="Digite o código">
+                    <button class="btn-success" type="submit">Remover</button>
+                </div>
+                <p class="access-help">Após pagar, solicite o código de liberação ao vendedor.</p>
+                <p class="access-error" id="remove-ads-error" role="alert" aria-live="polite"></p>
+            </form>
         </div>
     </div>
 
