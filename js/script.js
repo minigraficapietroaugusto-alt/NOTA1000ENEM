@@ -1,4 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const ACCESS_STORAGE_KEY = 'nota1000_access_unlocked';
+    const ACCESS_CODE = 'NOTA1000-10';
+    const paywallScreen = document.getElementById('paywall-screen');
+    const accessForm = document.getElementById('access-form');
+    const accessCodeInput = document.getElementById('access-code');
+    const accessError = document.getElementById('access-error');
+
+    function unlockAccess() {
+        localStorage.setItem(ACCESS_STORAGE_KEY, 'true');
+        document.body.classList.remove('access-locked');
+        paywallScreen.classList.add('hidden');
+    }
+
+    if(localStorage.getItem(ACCESS_STORAGE_KEY) === 'true') {
+        unlockAccess();
+    }
+
+    accessForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const typedCode = accessCodeInput.value.trim().toUpperCase();
+
+        if(typedCode === ACCESS_CODE) {
+            unlockAccess();
+            return;
+        }
+
+        accessError.innerText = 'Código inválido. Confira o código recebido após o pagamento.';
+        accessCodeInput.focus();
+    });
+
     // ===== 1. NAVEGAÇÃO E TEMA =====
     const navItems = document.querySelectorAll('.nav-item');
     const sections = document.querySelectorAll('.page-section');

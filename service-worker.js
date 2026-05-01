@@ -1,4 +1,4 @@
-const CACHE_NAME = 'nota1000enem-v1';
+const CACHE_NAME = 'nota1000enem-v2';
 const ASSETS = [
   './',
   './index.html',

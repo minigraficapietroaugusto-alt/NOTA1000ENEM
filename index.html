@@ -19,7 +19,44 @@
         rel="stylesheet">
 </head>
 
-<body class="dark-mode">
+<body class="dark-mode access-locked">
+    <section class="paywall-screen" id="paywall-screen" aria-labelledby="paywall-title">
+        <div class="paywall-card glass-panel">
+            <div class="paywall-brand">
+                <i class="fa-solid fa-pen-nib"></i>
+                <span>Nota<b>1000</b></span>
+            </div>
+            <p class="paywall-eyebrow">Acesso completo</p>
+            <h1 id="paywall-title">Estude redação ENEM pelo celular</h1>
+            <p class="paywall-copy">
+                Plataforma com repertórios, temas, modelos nota 1000, gerador de estrutura,
+                correção simulada e anotações. Acesso liberado após pagamento único.
+            </p>
+
+            <div class="paywall-price">
+                <span>R$</span>
+                <strong>10,00</strong>
+            </div>
+
+            <a class="btn-primary paywall-pix" id="pix-payment-link"
+                href="https://nubank.com.br/cobrar/1jns7v/69f43144-dc10-48b0-bf74-6b20b9cb7ca6"
+                target="_blank" rel="noopener">
+                <i class="fa-brands fa-pix"></i>
+                Pagar com Pix
+            </a>
+
+            <form class="access-form" id="access-form">
+                <label for="access-code">Código de liberação</label>
+                <div class="access-input-group">
+                    <input type="text" id="access-code" autocomplete="one-time-code" placeholder="Digite o código">
+                    <button class="btn-success" type="submit">Liberar</button>
+                </div>
+                <p class="access-help">Após pagar, use o código enviado pelo vendedor para liberar este aparelho.</p>
+                <p class="access-error" id="access-error" role="alert" aria-live="polite"></p>
+            </form>
+        </div>
+    </section>
+
     <div class="app-container">
         <div class="sidebar-backdrop" id="sidebar-backdrop" hidden></div>
         <!-- Sidebar -->
