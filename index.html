@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nota 1000 ENEM | Plataforma de Alta Performance</title>
+    <meta name="description" content="Plataforma pessoal de estudos para atingir a nota máxima na redação do ENEM.">
+    <meta name="theme-color" content="#0f111a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Nota1000 ENEM">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="assets/icon.svg">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="dark-mode">
+    <div class="app-container">
+        <div class="sidebar-backdrop" id="sidebar-backdrop" hidden></div>
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar" aria-label="Navegação principal">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fa-solid fa-pen-nib"></i>
+                    <span>Nota<b>1000</b></span>
+                </div>
+                <button id="theme-toggle" title="Alternar Tema"><i class="fa-solid fa-sun"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-item active" data-target="dashboard">
+                    <i class="fa-solid fa-chart-pie"></i> Dashboard
+                </a>
+                <a href="#competencias" class="nav-item" data-target="competencias">
+                    <i class="fa-solid fa-list-check"></i> Competências
+                </a>
+                <a href="#modelos" class="nav-item" data-target="modelos">
+                    <i class="fa-solid fa-medal"></i> Modelos Nota 1000
+                </a>
+                <a href="#temas" class="nav-item" data-target="temas">
+                    <i class="fa-solid fa-lightbulb"></i> Temas e Ideias
+                </a>
+                <a href="#repertorio" class="nav-item" data-target="repertorio">
+                    <i class="fa-solid fa-masks-theater"></i> Repertório
+                </a>
+                <a href="#dicionario" class="nav-item" data-target="dicionario">
+                    <i class="fa-solid fa-book"></i> Dicionário Avançado
+                </a>
+                <a href="#conectivos" class="nav-item" data-target="conectivos">
+                    <i class="fa-solid fa-link"></i> Conectivos
+                </a>
+                <a href="#gerador" class="nav-item" data-target="gerador">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Gerador de Estrutura
+                </a>
+                <a href="#correcao" class="nav-item" data-target="correcao">
+                    <i class="fa-solid fa-robot"></i> Correção Simulada
+                </a>
+                <a href="#anotacoes" class="nav-item" data-target="anotacoes">
+                    <i class="fa-solid fa-note-sticky"></i> Anotações
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <p>Foco na aprovação. <i class="fa-solid fa-rocket"></i></p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="top-title-group">
+                    <button id="mobile-menu-toggle" class="mobile-menu-toggle" type="button" aria-label="Abrir menu"
+                        aria-controls="sidebar" aria-expanded="false">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <h1 id="page-title">Dashboard</h1>
+                </div>
+                <div class="user-profile">
+                    <div class="avatar"><i class="fa-solid fa-user-graduate"></i></div>
+                    <span>Estudante</span>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <!-- Dashboard Section -->
+                <section id="dashboard" class="page-section active">
+                    <div class="welcome-card glass-panel">
+                        <h2>Bem-vindo à sua jornada rumo à nota 1000! 🎯</h2>
+                        <p>Esta plataforma foi desenhada exclusivamente para maximizar sua produtividade e aperfeiçoar
+                            sua escrita. Explore as ferramentas, estude os modelos e pratique incansavelmente.</p>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card glass-panel">
+                            <div class="stat-icon"><i class="fa-solid fa-fire"></i></div>
+                            <div class="stat-info">
+                                <h3>Dias de Foco</h3>
+                                <p id="streak-counter">1</p>
+                            </div>
+                        </div>
+                        <div class="stat-card glass-panel">
+                            <div class="stat-icon"><i class="fa-solid fa-file-pen"></i></div>
+                            <div class="stat-info">
+                                <h3>Redações Praticadas</h3>
+                                <p id="essays-counter">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card glass-panel">
+                            <div class="stat-icon"><i class="fa-solid fa-book-bookmark"></i></div>
+                            <div class="stat-info">
+                                <h3>Anotações Salvas</h3>
+                                <p id="notes-counter">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quick-tips glass-panel mt-4">
+                        <h3><i class="fa-solid fa-bolt"></i> Dica Rápida do Dia</h3>
+                        <p id="daily-tip">Sempre estruture sua redação com 4 parágrafos: 1 de Introdução, 2 de
+                            Desenvolvimento e 1 de Conclusão.</p>
+                    </div>
+                </section>
+
+                <!-- Competências Section -->
+                <section id="competencias" class="page-section">
+                    <div class="tabs-container">
+                        <div class="comp-tabs">
+                            <button class="comp-tab active" data-comp="1">C1: Norma Culta</button>
+                            <button class="comp-tab" data-comp="2">C2: Tema e Estrutura</button>
+                            <button class="comp-tab" data-comp="3">C3: Argumentação</button>
+                            <button class="comp-tab" data-comp="4">C4: Coesão</button>
+                            <button class="comp-tab" data-comp="5">C5: Intervenção</button>
+                        </div>
+                        <div id="comp-content" class="comp-content glass-panel">
+                            <!-- Content loaded via JS -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Modelos Section -->
+                <section id="modelos" class="page-section">
+                    <div class="models-grid" id="models-container">
+                        <!-- Content loaded via JS -->
+                    </div>
+                </section>
+
+                <!-- Temas Section -->
+                <section id="temas" class="page-section">
+                    <div class="search-bar">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" id="search-themes"
+                            placeholder="Buscar por eixo temático (ex: Saúde, Tecnologia, Meio Ambiente)...">
+                    </div>
+                    <div class="themes-list" id="themes-container">
+                        <!-- Content loaded via JS -->
+                    </div>
+                </section>
+
+                <!-- Repertório Section -->
+                <section id="repertorio" class="page-section">
+                    <div class="rep-filters">
+                        <button class="rep-filter active" data-filter="all">Todos</button>
+                        <button class="rep-filter" data-filter="filmes">Filmes/Séries</button>
+                        <button class="rep-filter" data-filter="livros">Livros</button>
+                        <button class="rep-filter" data-filter="filosofos">Filósofos/Sociólogos</button>
+                        <button class="rep-filter" data-filter="historico">Fatos Históricos</button>
+                    </div>
+                    <div class="rep-grid" id="rep-container">
+                        <!-- Content loaded via JS -->
+                    </div>
+                </section>
+
+                <!-- Dicionário Section -->
+                <section id="dicionario" class="page-section">
+                    <div class="glass-panel">
+                        <p class="section-desc">Substitua palavras comuns por vocabulário formal e preciso para elevar a
+                            nota da Competência 1.</p>
+                        <div class="dictionary-table-wrapper">
+                            <table class="premium-table">
+                                <thead>
+                                    <tr>
+                                        <th>Evite (Dia a dia)</th>
+                                        <th>Use (Formal)</th>
+                                        <th>Significado / Aplicação</th>
+                                        <th>Exemplo na Redação</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dict-body">
+                                    <!-- Content loaded via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Conectivos Section -->
+                <section id="conectivos" class="page-section">
+                    <div class="glass-panel">
+                        <p class="section-desc">A Competência 4 exige um repertório diversificado de operadores
+                            argumentativos entre os parágrafos e dentro deles.</p>
+                        <div class="connectives-grid" id="connectives-container">
+                            <!-- Content loaded via JS -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Gerador Section -->
+                <section id="gerador" class="page-section">
+                    <div class="glass-panel generator-container">
+                        <h2>Estruture sua Redação</h2>
+                        <p>Insira um tema para gerar um esqueleto focado na estrutura ENEM.</p>
+
+                        <div class="input-group">
+                            <input type="text" id="generator-theme"
+                                placeholder="Ex: Os desafios da saúde pública no Brasil...">
+                            <button id="btn-generate" class="btn-primary"><i class="fa-solid fa-wand-sparkles"></i>
+                                Gerar Estrutura</button>
+                        </div>
+
+                        <div id="generator-output" class="generator-output hidden">
+                            <!-- Output loaded via JS -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Correção Section -->
+                <section id="correcao" class="page-section">
+                    <div class="corrector-layout">
+                        <div class="glass-panel text-editor-area">
+                            <h2>Simulador de Avaliação</h2>
+                            <p>Cole sua redação abaixo. O sistema fará uma análise estrutural e lexical.</p>
+                            <textarea id="essay-input"
+                                placeholder="Escreva ou cole sua redação aqui... (Mínimo de 15 linhas)"></textarea>
+                            <button id="btn-correct" class="btn-primary"><i
+                                    class="fa-solid fa-magnifying-glass-chart"></i> Analisar Redação</button>
+                        </div>
+                        <div class="glass-panel analysis-area hidden" id="analysis-output">
+                            <!-- Output loaded via JS -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Anotações Section -->
+                <section id="anotacoes" class="page-section">
+                    <div class="notes-layout">
+                        <div class="notes-sidebar glass-panel">
+                            <button id="btn-new-note" class="btn-primary w-100 mb-3"><i class="fa-solid fa-plus"></i>
+                                Nova Anotação</button>
+                            <ul id="notes-list" class="notes-list">
+                                <!-- Notes list -->
+                            </ul>
+                        </div>
+                        <div class="note-editor glass-panel">
+                            <input type="text" id="note-title" placeholder="Título da Anotação...">
+                            <textarea id="note-body"
+                                placeholder="Escreva suas ideias, citações ou rascunhos aqui..."></textarea>
+                            <button id="btn-save-note" class="btn-success"><i class="fa-solid fa-floppy-disk"></i>
+                                Salvar</button>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal-overlay" id="essay-modal">
+        <div class="modal-content glass-panel">
+            <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/data-redacoes.js"></script>
+    <script src="js/data-repertorio.js"></script>
+    <script src="js/data-temas.js"></script>
+    <script src="js/data-conectivos.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

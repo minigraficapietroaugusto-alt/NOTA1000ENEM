@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">Nota1000 ENEM</title>
+  <rect width="512" height="512" rx="96" fill="#0f111a"/>
+  <path fill="#22c55e" d="M116 352h280v38H116z"/>
+  <path fill="#6366f1" d="M132 116h204c35 0 64 29 64 64v196H176c-35 0-64-29-64-64V136c0-11 9-20 20-20z"/>
+  <path fill="#eef2ff" d="M166 176h180v26H166zm0 62h180v26H166zm0 62h128v26H166z"/>
+  <path fill="#f59e0b" d="M360 105 407 58l47 47-47 47z"/>
+  <path fill="#fef3c7" d="m327 232 33-127 47 47-127 33c-11 3-20-6-17-17z"/>
+  <text x="256" y="432" fill="#ffffff" font-family="Arial, sans-serif" font-size="54" font-weight="700" text-anchor="middle">1000</text>
+</svg>
