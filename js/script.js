@@ -4,8 +4,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const authForm = document.getElementById('auth-form');
     const studentNameInput = document.getElementById('student-name');
     const studentEmailInput = document.getElementById('student-email');
+    const studentPasswordInput = document.getElementById('student-password');
     const studentDisplayName = document.getElementById('student-display-name');
     const btnLogout = document.getElementById('btn-logout');
+    const authModeBadge = document.getElementById('auth-mode-badge');
+    const authHelp = document.getElementById('auth-help');
+    const authError = document.getElementById('auth-error');
+    const authConfig = window.NOTA1000_AUTH_CONFIG || {};
+    const hasSupabase = authConfig.provider === 'supabase'
+        && authConfig.supabaseUrl
+        && authConfig.supabaseAnonKey
+        && window.supabase;
+    const supabaseClient = hasSupabase
+        ? window.supabase.createClient(authConfig.supabaseUrl, authConfig.supabaseAnonKey)
+        : null;
+
+    authModeBadge.innerText = hasSupabase ? 'Cadastro online real' : 'Cadastro local';
+    authHelp.innerText = hasSupabase
+        ? 'Conta online com autenticação Supabase. Seus dados podem ser acessados em outro aparelho.'
+        : 'Seu cadastro fica salvo apenas neste navegador. Para conta online real, configure o Supabase gratuito em js/auth-config.js.';
 
     function getStudentProfile() {
         try {
@@ -21,13 +38,32 @@ document.addEventListener('DOMContentLoaded', () => {
         authScreen.classList.add('hidden');
     }
 
+    async function loadOnlineSession() {
+        if(!supabaseClient) return;
+        const { data } = await supabaseClient.auth.getSession();
+        const user = data?.session?.user;
+        if(user) {
+            const profile = {
+                name: user.user_metadata?.name || user.email?.split('@')[0] || 'Estudante',
+                email: user.email,
+                createdAt: user.created_at,
+                online: true
+            };
+            localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(profile));
+            enterApp(profile);
+        }
+    }
+
     const savedProfile = getStudentProfile();
     if(savedProfile?.name && savedProfile?.email) {
         enterApp(savedProfile);
     }
+    loadOnlineSession();
 
-    authForm.addEventListener('submit', (event) => {
+    authForm.addEventListener('submit', async (event) => {
         event.preventDefault();
+        authError.innerText = '';
+        const action = event.submitter?.dataset?.authAction || 'local';
         const profile = {
             name: studentNameInput.value.trim(),
             email: studentEmailInput.value.trim().toLowerCase(),
@@ -36,11 +72,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if(!profile.name || !profile.email) return;
 
+        if(hasSupabase && action !== 'local') {
+            if(!studentPasswordInput.value || studentPasswordInput.value.length < 6) {
+                authError.innerText = 'Digite uma senha com pelo menos 6 caracteres.';
+                return;
+            }
+
+            const request = action === 'login'
+                ? supabaseClient.auth.signInWithPassword({
+                    email: profile.email,
+                    password: studentPasswordInput.value
+                })
+                : supabaseClient.auth.signUp({
+                    email: profile.email,
+                    password: studentPasswordInput.value,
+                    options: { data: { name: profile.name } }
+                });
+
+            const { data, error } = await request;
+            if(error) {
+                authError.innerText = error.message;
+                return;
+            }
+
+            const user = data?.user;
+            profile.name = user?.user_metadata?.name || profile.name;
+            profile.online = true;
+        }
+
         localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(profile));
         enterApp(profile);
     });
 
-    btnLogout.addEventListener('click', () => {
+    btnLogout.addEventListener('click', async () => {
+        if(supabaseClient) await supabaseClient.auth.signOut();
         localStorage.removeItem(USER_STORAGE_KEY);
         document.body.classList.add('auth-locked');
         authScreen.classList.remove('hidden');
@@ -63,6 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
         atividades: 'Atividades ENEM',
         'modelos-prontos': 'Modelos de Redação',
         inteligencia: 'O que mais cai',
+        atualizacoes: 'Atualizações',
         temas: 'Temas e Ideias',
         repertorio: 'Repertório',
         dicionario: 'Dicionário Avançado',

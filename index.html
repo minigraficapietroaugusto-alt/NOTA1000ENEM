@@ -29,8 +29,9 @@
             <p class="auth-eyebrow">Cadastro gratuito</p>
             <h1 id="auth-title">Entre para estudar redação ENEM pelo celular</h1>
             <p class="auth-copy">
-                O acesso é totalmente grátis. Faça um cadastro simples para salvar seu progresso neste navegador.
+                O acesso é totalmente grátis. Faça seu cadastro para salvar seu progresso e estudar pelo celular.
             </p>
+            <div class="auth-mode-badge" id="auth-mode-badge">Cadastro local</div>
 
             <form class="auth-form" id="auth-form">
                 <label for="student-name">Nome</label>
@@ -39,11 +40,26 @@
                 <label for="student-email">E-mail</label>
                 <input type="email" id="student-email" autocomplete="email" placeholder="seuemail@exemplo.com" required>
 
+                <label for="student-password">Senha</label>
+                <input type="password" id="student-password" autocomplete="current-password" placeholder="Crie ou digite sua senha">
+
+                <div class="auth-actions">
+                    <button class="btn-primary" type="submit" data-auth-action="signup">
+                        <i class="fa-solid fa-user-plus"></i>
+                        Criar conta
+                    </button>
+                    <button class="btn-success" type="submit" data-auth-action="login">
+                        <i class="fa-solid fa-right-to-bracket"></i>
+                        Entrar
+                    </button>
+                </div>
+
                 <button class="btn-primary" type="submit">
                     <i class="fa-solid fa-right-to-bracket"></i>
-                    Entrar no app
+                    Continuar localmente
                 </button>
-                <p class="auth-help">Seu cadastro fica salvo apenas neste navegador.</p>
+                <p class="auth-help" id="auth-help">Seu cadastro fica salvo apenas neste navegador. O modo online será ativado quando o Supabase for configurado.</p>
+                <p class="access-error" id="auth-error" role="alert" aria-live="polite"></p>
             </form>
         </div>
     </section>
@@ -77,6 +93,9 @@
                 </a>
                 <a href="#inteligencia" class="nav-item" data-target="inteligencia">
                     <i class="fa-solid fa-chart-line"></i> O que mais cai
+                </a>
+                <a href="#atualizacoes" class="nav-item" data-target="atualizacoes">
+                    <i class="fa-solid fa-rotate"></i> Atualizações
                 </a>
                 <a href="#temas" class="nav-item" data-target="temas">
                     <i class="fa-solid fa-lightbulb"></i> Temas e Ideias
@@ -291,6 +310,30 @@
                     </div>
                 </section>
 
+                <!-- Atualizações Section -->
+                <section id="atualizacoes" class="page-section">
+                    <div class="section-toolbar glass-panel">
+                        <div>
+                            <h2>Atualizações do sistema</h2>
+                            <p>Registro das melhorias para acompanhar a evolução do Nota1000 ENEM.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-list">
+                        <div class="timeline-item">
+                            <strong>v3</strong>
+                            <div><h4>Banco de atividades avançado</h4><p>Mais de 9 mil questões geradas por 44 moldes diferentes, com 21 contextos de redação ENEM.</p></div>
+                        </div>
+                        <div class="timeline-item">
+                            <strong>v2</strong>
+                            <div><h4>Textos completos autorais</h4><p>Biblioteca de modelos completos por tema oficial, com introdução, desenvolvimento, conclusão e análise.</p></div>
+                        </div>
+                        <div class="timeline-item">
+                            <strong>v1</strong>
+                            <div><h4>App grátis com cadastro</h4><p>Cadastro local, dashboard, atividades, simulador, repertório, temas e PWA para celular.</p></div>
+                        </div>
+                    </div>
+                </section>
+
                 <!-- Temas Section -->
                 <section id="temas" class="page-section">
                     <div class="search-bar">
@@ -430,6 +473,8 @@
     <script src="js/data-temas.js"></script>
     <script src="js/data-conectivos.js"></script>
     <script src="js/data-plataforma.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/auth-config.js"></script>
     <script src="js/script.js"></script>
 </body>
 

@@ -130,6 +130,18 @@ body.auth-locked .app-container {
     line-height: 1.6;
 }
 
+.auth-mode-badge {
+    display: inline-flex;
+    width: fit-content;
+    margin: 16px 0 4px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: var(--accent-light);
+    color: var(--accent-primary);
+    font-size: 0.82rem;
+    font-weight: 800;
+}
+
 .auth-form,
 .access-form {
     display: flex;
@@ -172,6 +184,12 @@ body.auth-locked .app-container {
 
 .auth-form button {
     margin-top: 8px;
+}
+
+.auth-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
 }
 
 .auth-form input:focus,
@@ -1401,6 +1419,10 @@ button {
     }
 
     .access-input-group {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-actions {
         grid-template-columns: 1fr;
     }
 

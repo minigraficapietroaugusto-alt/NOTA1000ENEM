@@ -203,11 +203,263 @@ const activityTemplates = [
     }
 ];
 
+const extraActivityTemplates = [
+    {
+        topic: "pontuacao",
+        stem: "Qual frase usa ponto e vírgula de forma mais adequada para separar ideias relacionadas?",
+        options: ["O Estado deve agir; a sociedade também precisa participar.", "O Estado; deve agir a sociedade também.", "O Estado deve; agir a sociedade também precisa.", "O Estado deve agir a; sociedade também precisa.", "O Estado deve agir a sociedade; também precisa participar."],
+        answer: 0,
+        explanation: "O ponto e vírgula pode separar orações coordenadas relacionadas e extensas."
+    },
+    {
+        topic: "pontuacao",
+        stem: "Qual alternativa evita vírgula entre sujeito e verbo?",
+        options: ["A ausência de políticas públicas, prejudica a população.", "A ausência de políticas públicas prejudica a população.", "A ausência, de políticas públicas prejudica a população.", "A ausência de políticas, públicas prejudica a população.", "A ausência de políticas públicas prejudica, a população."],
+        answer: 1,
+        explanation: "Não se separa sujeito e verbo por vírgula."
+    },
+    {
+        topic: "pontuacao",
+        stem: "Em qual alternativa a oração explicativa está corretamente isolada?",
+        options: ["O Estado que é responsável por direitos deve agir.", "O Estado, que é responsável por direitos, deve agir.", "O Estado que é responsável, por direitos deve agir.", "O Estado que, é responsável por direitos deve agir.", "O Estado que é responsável por direitos, deve agir."],
+        answer: 1,
+        explanation: "Oração explicativa deve aparecer entre vírgulas."
+    },
+    {
+        topic: "coesao",
+        stem: "Qual alternativa retoma melhor a ideia anterior sem repetição excessiva?",
+        options: ["O problema é grave. O problema precisa ser resolvido.", "O problema é grave. Tal cenário precisa ser resolvido.", "O problema é grave. A coisa precisa ser resolvida.", "O problema é grave. Ele problema precisa ser resolvido.", "O problema é grave. O assunto coisa precisa ser resolvido."],
+        answer: 1,
+        explanation: "'Tal cenário' retoma a ideia anterior com coesão referencial."
+    },
+    {
+        topic: "coesao",
+        stem: "Qual par de conectivos indica, respectivamente, oposição e conclusão?",
+        options: ["Ademais / Outrossim", "Contudo / Portanto", "Por exemplo / Além disso", "Porque / Embora", "Logo / Todavia"],
+        answer: 1,
+        explanation: "'Contudo' marca oposição; 'Portanto' marca conclusão."
+    },
+    {
+        topic: "coesao",
+        stem: "Qual alternativa melhora a progressão lógica de um parágrafo?",
+        options: ["Começar cada frase com assunto diferente.", "Apresentar causa, explicar funcionamento e mostrar consequência.", "Usar repertório sem explicar.", "Repetir a tese cinco vezes.", "Terminar sem retomar o argumento."],
+        answer: 1,
+        explanation: "Progressão lógica exige encadeamento: causa, desenvolvimento e consequência."
+    },
+    {
+        topic: "interpretacao",
+        stem: "Se o tema fala em 'desafios para a valorização', o texto deve priorizar:",
+        options: ["Apenas elogios ao tema.", "Problemas que dificultam a valorização e caminhos para superá-los.", "Uma narrativa pessoal.", "Um resumo dos textos motivadores.", "Definições soltas sem tese."],
+        answer: 1,
+        explanation: "O comando 'desafios' pede obstáculos e proposta de enfrentamento."
+    },
+    {
+        topic: "interpretacao",
+        stem: "Qual atitude caracteriza fuga ao tema?",
+        options: ["Responder ao recorte apresentado.", "Usar repertório conectado ao tema.", "Discutir assunto totalmente diferente do proposto.", "Retomar palavras-chave na conclusão.", "Criar proposta de intervenção pertinente."],
+        answer: 2,
+        explanation: "Fuga ocorre quando o texto abandona o tema proposto."
+    },
+    {
+        topic: "interpretacao",
+        stem: "A tese da introdução deve:",
+        options: ["Trazer o ponto de vista e indicar os caminhos argumentativos.", "Apenas copiar o tema.", "Ser uma pergunta sem resposta.", "Conter todos os detalhes da intervenção.", "Ser escrita em primeira pessoa informal."],
+        answer: 0,
+        explanation: "A tese orienta o projeto de texto e antecipa a argumentação."
+    },
+    {
+        topic: "argumentacao",
+        stem: "Qual alternativa apresenta causa e consequência de forma clara?",
+        options: ["O problema é triste e muito ruim.", "A falta de fiscalização permite abusos e amplia a violação de direitos.", "Todo mundo sabe que isso existe.", "A sociedade é complicada.", "Isso acontece desde sempre."],
+        answer: 1,
+        explanation: "A frase relaciona causa específica a consequência social."
+    },
+    {
+        topic: "argumentacao",
+        stem: "O que torna um desenvolvimento mais forte?",
+        options: ["Opinião sem justificativa.", "Repertório citado e abandonado.", "Tópico frasal, explicação, exemplo e fechamento.", "Uso de gírias para aproximar o leitor.", "Ausência de conectivos."],
+        answer: 2,
+        explanation: "Essa sequência cria argumento completo e avaliável."
+    },
+    {
+        topic: "argumentacao",
+        stem: "Qual frase evita senso comum?",
+        options: ["Isso é culpa de todos.", "O problema existe porque o Brasil é assim.", "A insuficiência de políticas públicas impede a efetivação do direito previsto em lei.", "As pessoas precisam ter consciência.", "É só melhorar a educação."],
+        answer: 2,
+        explanation: "A alternativa apresenta fundamento institucional e específico."
+    },
+    {
+        topic: "repertorio",
+        stem: "Qual uso de repertório é mais produtivo?",
+        options: ["Segundo Bauman, modernidade líquida. Pronto.", "Bauman discute relações frágeis; essa ideia ajuda a explicar a superficialidade dos vínculos no tema.", "Citar Bauman em qualquer tema sem relação.", "Usar uma frase decorada sem explicar.", "Inventar dado estatístico."],
+        answer: 1,
+        explanation: "O repertório é produtivo quando explicado e conectado ao recorte."
+    },
+    {
+        topic: "repertorio",
+        stem: "Qual repertório combina melhor com cidadania e direitos?",
+        options: ["Receita culinária", "Declaração Universal dos Direitos Humanos", "Tabela de futebol", "Piada popular", "Propaganda comercial"],
+        answer: 1,
+        explanation: "A DUDH é repertório legitimado para discutir dignidade e direitos."
+    },
+    {
+        topic: "repertorio",
+        stem: "Em redação ENEM, dado estatístico deve ser usado para:",
+        options: ["Enfeitar o texto sem análise.", "Substituir a tese.", "Sustentar argumento e ser interpretado.", "Aumentar linhas sem função.", "Finalizar sem proposta."],
+        answer: 2,
+        explanation: "Dados precisam ser analisados para fortalecer a argumentação."
+    },
+    {
+        topic: "competencias",
+        stem: "A Competência 1 se relaciona principalmente a:",
+        options: ["Norma padrão da língua portuguesa.", "Título criativo.", "Quantidade de linhas.", "Tema escolhido pelo aluno.", "Uso de imagem."],
+        answer: 0,
+        explanation: "C1 avalia domínio da escrita formal."
+    },
+    {
+        topic: "competencias",
+        stem: "A Competência 3 avalia:",
+        options: ["Somente ortografia.", "Organização e defesa de um ponto de vista.", "Apenas proposta de intervenção.", "Caligrafia digital.", "Memorização de frases."],
+        answer: 1,
+        explanation: "C3 observa seleção, organização e interpretação de argumentos."
+    },
+    {
+        topic: "competencias",
+        stem: "A Competência 4 é prejudicada quando o texto:",
+        options: ["Usa conectivos variados.", "Retoma ideias com pronomes.", "Apresenta frases soltas sem ligação.", "Mantém progressão temática.", "Usa sinônimos adequados."],
+        answer: 2,
+        explanation: "Frases soltas prejudicam coesão e articulação textual."
+    },
+    {
+        topic: "intervencao",
+        stem: "Qual agente está mais adequado para uma proposta sobre educação básica?",
+        options: ["Ministério da Educação", "NASA", "Torcida organizada", "Personagens fictícios", "Apenas 'alguém'"],
+        answer: 0,
+        explanation: "O MEC é agente institucional pertinente para educação."
+    },
+    {
+        topic: "intervencao",
+        stem: "Qual alternativa apresenta finalidade clara?",
+        options: ["Por meio de campanhas.", "A fim de reduzir a exclusão e garantir acesso a direitos.", "O governo deve agir.", "Com palestras.", "A sociedade precisa mudar."],
+        answer: 1,
+        explanation: "Finalidade indica o objetivo da ação proposta."
+    },
+    {
+        topic: "intervencao",
+        stem: "Qual proposta é mais detalhada?",
+        options: ["O governo deve resolver.", "Campanhas devem acontecer.", "O Ministério da Saúde deve criar campanhas em UBS, com agentes comunitários, para orientar famílias.", "A mídia deve ajudar.", "As pessoas precisam se conscientizar."],
+        answer: 2,
+        explanation: "A alternativa traz agente, ação, meio/local e detalhamento."
+    },
+    {
+        topic: "conectivos",
+        stem: "Qual conectivo introduz exemplificação?",
+        options: ["Por exemplo", "Todavia", "Portanto", "Embora", "Outrossim"],
+        answer: 0,
+        explanation: "'Por exemplo' introduz exemplificação."
+    },
+    {
+        topic: "conectivos",
+        stem: "Qual conectivo indica consequência?",
+        options: ["Consequentemente", "No entanto", "Apesar de", "Por outro lado", "Segundo"],
+        answer: 0,
+        explanation: "'Consequentemente' marca resultado lógico."
+    },
+    {
+        topic: "conectivos",
+        stem: "Qual conectivo é adequado para iniciar o segundo desenvolvimento adicionando argumento?",
+        options: ["Ademais", "Portanto", "Em suma", "Finalmente", "Conforme"],
+        answer: 0,
+        explanation: "'Ademais' acrescenta novo argumento."
+    },
+    {
+        topic: "norma",
+        stem: "Qual alternativa evita marca de oralidade?",
+        options: ["Tá difícil resolver isso.", "É necessário enfrentar esse problema.", "Aí o governo faz algo.", "Tipo, a sociedade muda.", "Né, isso é ruim."],
+        answer: 1,
+        explanation: "A frase mantém registro formal."
+    },
+    {
+        topic: "norma",
+        stem: "Qual substituição melhora a formalidade?",
+        options: ["coisa -> aspecto", "problema -> treta", "pessoas -> galera", "governo -> caras", "importante -> daora"],
+        answer: 0,
+        explanation: "'Aspecto' é mais preciso e formal que 'coisa'."
+    },
+    {
+        topic: "norma",
+        stem: "Qual frase apresenta concordância adequada?",
+        options: ["As políticas públicas é importante.", "Os dados revela o problema.", "A população idosa enfrenta desafios.", "As escola precisa agir.", "Os direito deve ser garantido."],
+        answer: 2,
+        explanation: "Sujeito e verbo concordam corretamente."
+    },
+    {
+        topic: "argumentacao",
+        stem: "Qual é a função do tópico frasal?",
+        options: ["Abrir o parágrafo apresentando a ideia central.", "Encerrar a conclusão.", "Substituir o repertório.", "Copiar a proposta.", "Criar título obrigatório."],
+        answer: 0,
+        explanation: "O tópico frasal guia o parágrafo e anuncia o argumento."
+    },
+    {
+        topic: "interpretacao",
+        stem: "Se a proposta fala em 'Brasil', o texto deve:",
+        options: ["Focar só em outros países.", "Relacionar o problema ao contexto brasileiro.", "Ignorar políticas nacionais.", "Fazer relato pessoal estrangeiro.", "Evitar qualquer exemplo nacional."],
+        answer: 1,
+        explanation: "O recorte espacial precisa ser respeitado."
+    },
+    {
+        topic: "competencias",
+        stem: "Qual competência é mais diretamente afetada pela falta de conectivos?",
+        options: ["C1", "C2", "C3", "C4", "C5"],
+        answer: 3,
+        explanation: "C4 avalia mecanismos linguísticos de coesão."
+    },
+    {
+        topic: "intervencao",
+        stem: "Uma intervenção que fere direitos humanos:",
+        options: ["Pode zerar ou prejudicar muito a C5.", "Sempre aumenta a nota.", "É obrigatória.", "Substitui o desenvolvimento.", "Só afeta o título."],
+        answer: 0,
+        explanation: "A proposta precisa respeitar direitos humanos."
+    },
+    {
+        topic: "repertorio",
+        stem: "Qual alternativa mostra repertório legitimado?",
+        options: ["Um boato sem fonte.", "Uma lei, obra literária, conceito filosófico ou dado institucional.", "Uma opinião anônima.", "Uma frase inventada.", "Um meme sem relação."],
+        answer: 1,
+        explanation: "Repertório legitimado vem de áreas reconhecíveis do conhecimento."
+    },
+    {
+        topic: "coesao",
+        stem: "Qual retomada evita repetição de 'idosos'?",
+        options: ["idosos idosos", "esse grupo social", "essas coisa", "os negócio", "aí eles"],
+        answer: 1,
+        explanation: "'Esse grupo social' retoma o termo com formalidade."
+    },
+    {
+        topic: "pontuacao",
+        stem: "Qual alternativa separa corretamente uma enumeração?",
+        options: ["Agente ação meio finalidade.", "Agente, ação, meio e finalidade.", "Agente ação, meio e finalidade", "Agente, ação meio finalidade.", "Agente ação meio, e finalidade."],
+        answer: 1,
+        explanation: "Elementos enumerados devem ser separados por vírgula, com 'e' antes do último."
+    },
+    {
+        topic: "norma",
+        stem: "Qual expressão deve ser evitada por ser informal?",
+        options: ["Hodiernamente", "Nesse contexto", "A fim de", "Tipo assim", "Portanto"],
+        answer: 3,
+        explanation: "'Tipo assim' é marca de oralidade."
+    }
+];
+
+activityTemplates.push(...extraActivityTemplates);
+
 function buildAtividadesData() {
     const contexts = [
         "saúde mental", "educação inclusiva", "herança africana", "trabalho de cuidado", "registro civil",
         "cinema no Brasil", "dados na internet", "intolerância religiosa", "violência contra a mulher",
-        "povos tradicionais", "envelhecimento", "publicidade infantil"
+        "povos tradicionais", "envelhecimento", "publicidade infantil", "leitura", "ética nacional",
+        "preservação da Amazônia", "trabalho infantil", "migração", "intolerância religiosa",
+        "violência urbana", "participação social", "democracia", "privacidade digital"
     ];
     const questions = [];
 
