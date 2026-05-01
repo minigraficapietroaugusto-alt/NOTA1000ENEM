@@ -29,7 +29,7 @@
             <p class="auth-eyebrow">Cadastro gratuito</p>
             <h1 id="auth-title">Entre para estudar redação ENEM pelo celular</h1>
             <p class="auth-copy">
-                O acesso é grátis com anúncios. Quem quiser estudar sem anúncios pode remover por R$ 10,00 via Pix.
+                O acesso é totalmente grátis. Faça um cadastro simples para salvar seu progresso neste navegador.
             </p>
 
             <form class="auth-form" id="auth-form">
@@ -118,9 +118,6 @@
                 <div class="user-profile">
                     <div class="avatar"><i class="fa-solid fa-user-graduate"></i></div>
                     <span id="student-display-name">Estudante</span>
-                    <button id="btn-remove-ads" class="header-action" type="button" title="Remover anúncios">
-                        <i class="fa-solid fa-rectangle-ad"></i>
-                    </button>
                     <button id="btn-logout" class="header-action" type="button" title="Sair">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                     </button>
@@ -413,7 +410,7 @@
                 <aside class="ad-slot bottom-ad" data-ad-slot>
                     <span>Publicidade</span>
                     <strong>Espaço para anúncio</strong>
-                    <small>Remova os anúncios por R$ 10,00</small>
+                    <small>O app é gratuito e pode exibir anúncios.</small>
                 </aside>
             </div>
         </main>
@@ -424,29 +421,6 @@
         <div class="modal-content glass-panel">
             <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
             <div id="modal-body"></div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="ads-modal">
-        <div class="modal-content glass-panel ads-modal-content">
-            <button class="close-ads-modal"><i class="fa-solid fa-xmark"></i></button>
-            <h2>Remover anúncios</h2>
-            <p>O app é grátis com anúncios. Para estudar sem anúncios neste aparelho, pague R$ 10,00 no Pix e digite o código de liberação.</p>
-            <a class="btn-primary paywall-pix" id="pix-payment-link"
-                href="https://nubank.com.br/cobrar/1jns7v/69f43144-dc10-48b0-bf74-6b20b9cb7ca6"
-                target="_blank" rel="noopener">
-                <i class="fa-brands fa-pix"></i>
-                Pagar R$ 10,00 com Pix
-            </a>
-            <form class="access-form" id="remove-ads-form">
-                <label for="remove-ads-code">Código de liberação</label>
-                <div class="access-input-group">
-                    <input type="text" id="remove-ads-code" autocomplete="one-time-code" placeholder="Digite o código">
-                    <button class="btn-success" type="submit">Remover</button>
-                </div>
-                <p class="access-help">Após pagar, solicite o código de liberação ao vendedor.</p>
-                <p class="access-error" id="remove-ads-error" role="alert" aria-live="polite"></p>
-            </form>
         </div>
     </div>
 

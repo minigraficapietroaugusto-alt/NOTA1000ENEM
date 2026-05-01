@@ -1,19 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     const USER_STORAGE_KEY = 'nota1000_student_profile';
-    const ADS_REMOVED_STORAGE_KEY = 'nota1000_ads_removed';
-    const REMOVE_ADS_CODE = 'NOTA1000-10';
     const authScreen = document.getElementById('auth-screen');
     const authForm = document.getElementById('auth-form');
     const studentNameInput = document.getElementById('student-name');
     const studentEmailInput = document.getElementById('student-email');
     const studentDisplayName = document.getElementById('student-display-name');
     const btnLogout = document.getElementById('btn-logout');
-    const btnRemoveAds = document.getElementById('btn-remove-ads');
-    const adsModal = document.getElementById('ads-modal');
-    const closeAdsModal = document.querySelector('.close-ads-modal');
-    const removeAdsForm = document.getElementById('remove-ads-form');
-    const removeAdsCodeInput = document.getElementById('remove-ads-code');
-    const removeAdsError = document.getElementById('remove-ads-error');
 
     function getStudentProfile() {
         try {
@@ -29,21 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
         authScreen.classList.add('hidden');
     }
 
-    function applyAdsState() {
-        const adsRemoved = localStorage.getItem(ADS_REMOVED_STORAGE_KEY) === 'true';
-        document.body.classList.toggle('ads-removed', adsRemoved);
-        document.body.classList.toggle('ads-enabled', !adsRemoved);
-        btnRemoveAds.innerHTML = adsRemoved
-            ? '<i class="fa-solid fa-circle-check"></i>'
-            : '<i class="fa-solid fa-rectangle-ad"></i>';
-        btnRemoveAds.title = adsRemoved ? 'Anúncios removidos' : 'Remover anúncios';
-    }
-
     const savedProfile = getStudentProfile();
     if(savedProfile?.name && savedProfile?.email) {
         enterApp(savedProfile);
     }
-    applyAdsState();
 
     authForm.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -64,31 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('auth-locked');
         authScreen.classList.remove('hidden');
         studentNameInput.focus();
-    });
-
-    btnRemoveAds.addEventListener('click', () => {
-        adsModal.classList.add('active');
-    });
-
-    closeAdsModal.addEventListener('click', () => adsModal.classList.remove('active'));
-    adsModal.addEventListener('click', (event) => {
-        if(event.target === adsModal) adsModal.classList.remove('active');
-    });
-
-    removeAdsForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const typedCode = removeAdsCodeInput.value.trim().toUpperCase();
-
-        if(typedCode === REMOVE_ADS_CODE) {
-            localStorage.setItem(ADS_REMOVED_STORAGE_KEY, 'true');
-            removeAdsError.innerText = '';
-            adsModal.classList.remove('active');
-            applyAdsState();
-            return;
-        }
-
-        removeAdsError.innerText = 'Código inválido. Confira o código recebido após o pagamento.';
-        removeAdsCodeInput.focus();
     });
 
     // ===== 1. NAVEGAÇÃO E TEMA =====
